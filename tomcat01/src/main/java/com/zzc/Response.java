@@ -41,8 +41,8 @@ public class Response {
                 }
 
                 StringBuffer result = new StringBuffer();
-                result.append("HTTP/1.1 200 OK \r\n");
-                result.append("Content-Type:text/html \r\n");
+                result.append("HTTP/1.1 200 OK\r\n");
+                result.append("Content-Type:text/html\r\n");
                 result.append("Content-Length:" + file.length() + "\r\n");
                 result.append("\r\n" + sb.toString());
 
@@ -60,7 +60,7 @@ public class Response {
                 StringBuffer error = new StringBuffer();
                 error.append("HTTP/1.1 404 File Not Found\r\n");
                 error.append("Content-Type: text/html\r\n");
-                error.append("Content-Length:20 \r\n").append("\r\n");
+                error.append("Content-Length:20\r\n").append("\r\n");
                 error.append("<h1 >File Not Found..</h1>");
 
                 out.write(error.toString().getBytes());
