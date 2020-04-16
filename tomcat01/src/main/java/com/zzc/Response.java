@@ -13,7 +13,7 @@ public class Response {
     private Request request;
     private OutputStream out;
 
-    //private static final int BUFFER_SIZE = 1024;
+    private static final int BUFFER_SIZE = 1024;
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpServer.class);
 
     public Response(OutputStream out) {
@@ -21,19 +21,32 @@ public class Response {
     }
 
     public void sendStaticResource() {
-        //byte[] bytes = new byte[BUFFER_SIZE];
-        //FileInputStream in = null;
+        byte[] bytes = new byte[BUFFER_SIZE];
+        FileInputStream in = null;
 
         try {
             File file = new File(HttpServer.WEB_APP, request.getUri());
             if (file.exists()) {
-                /*in = new FileInputStream(file);
+                StringBuffer result = new StringBuffer();
+                // 状态行
+                result.append("HTTP/1.1 200 OK\r\n");
+                // 响应头
+                result.append("Content-Type:text/html\r\n");
+                result.append("Content-Length:" + file.length() + "\r\n");
+                result.append("\r\n");
+                out.write(result.toString().getBytes());
+
+                in = new FileInputStream(file);
                 int len = in.read(bytes, 0, BUFFER_SIZE);
+                // 响应正文
                 while (len != -1) {
                     out.write(bytes, 0, len);
                     len = in.read(bytes, 0, BUFFER_SIZE);
-                }*/
-                BufferedReader reader = new BufferedReader(new FileReader(file));
+                }
+                out.flush();
+                out.close();
+
+                /*BufferedReader reader = new BufferedReader(new FileReader(file));
                 StringBuffer sb = new StringBuffer();
                 String line = null;
                 while (null != (line = reader.readLine())) {
@@ -48,7 +61,7 @@ public class Response {
 
                 out.write(result.toString().getBytes());
                 out.flush();
-                out.close();
+                out.close();*/
             } else {
                 // 字符串拼接耗性能
                 /*String errorMsg = "HTTP/1.1 404 File Not Found\r\n" +
@@ -64,15 +77,24 @@ public class Response {
                 error.append("<h1 >File Not Found..</h1>");
 
                 out.write(error.toString().getBytes());
+                out.flush();
+                out.close();
             }
         } catch (FileNotFoundException e) {
             LOGGER.error("File Not Found", e);
         } catch (IOException e) {
             LOGGER.error("write out data fail", e);
         } finally {
-            try {
+            /*try {
                 if (null != out) {
                     out.close();
+                }
+            } catch (IOException e) {
+                LOGGER.error("Close FileInputStream Fail", e);
+            }*/
+            try {
+                if (null != in) {
+                    in.close();
                 }
             } catch (IOException e) {
                 LOGGER.error("Close FileInputStream Fail", e);
