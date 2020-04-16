@@ -11,6 +11,7 @@
     <module>tomcat00</module>
     <module>tomcat01</module>
       <module>tomcat02</module>
+      <module>tomcat03</module>
   </modules>
   <packaging>pom</packaging>
 
