@@ -35,3 +35,6 @@
 1. 启动Bootstrap类中的main()方法---程序会监听8080端口
 2. 访问静态资源（webapp/resource/index.html）：在浏览器的地址栏中输入：localhost:8080/resource/index.html
 3. 访问Servlet（TestServlet）：在浏览器的地址栏中输入：localhost:8080/servlet/TestServlet
+
+### 2.3tomcat04
+tomcat03只能一个一个接受请求，tomcat04进行了改进，可以接受多个请求。
